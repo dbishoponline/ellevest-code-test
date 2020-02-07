@@ -87,37 +87,33 @@ const buildSocialTransfers = data =>
 
 const postTransfer = (data, accounts) =>
   Just(data)
-    .map(d =>
-      findById(accounts, d.originAccount).balance >= data.amount
-        ? req('post', api.transfers, { ...data, "completedAt": null, "failedAt": null }).run().promise()
-        : log(_t.insufficient_funds))
+    .map(d => {
+      const originAccount = findById(accounts, d.originAccount)
+
+      return originAccount.balance >= data.amount
+        ? req('post', api.transfers, {
+            ...data,
+            completedAt: null,
+            failedAt: null,
+          })
+          .run()
+          .promise()
+          .then(transfer =>
+            updateAccount({
+              id: d.originAccount,
+              amount: originAccount.balance + data.amount
+            })
+            .run()
+            .promise())
+        : log(_t.insufficient_funds)
+    })
     .getOrElse(null)
 
-  // 1. confirm funds are in account
-  // 2. if deficient funds, send error
-  // 3. update related resources
+const updateAccount = account =>
+  Just(account)
+    .map(a => req('put', api.accounts, a)).run().promise()
+    .getOrElse()
 
-
-  // {
-  //   "originAccount": 3,
-  //   "targetAccount": 1,
-  //   "amount": 1230,
-  //   "description": "Thanks for the laughs!",
-  //   "status": "initiated",
-  //   "initiatedAt": "2019-05-30T12:53:38-04:00" // For an extra challenge, set this value to the current time
-  // }
-  // This method should output the response from the Transfers API. For example:
-  // {
-  //   "id": 4,
-  //   "status": "initiated",
-  //   "originAccount": 3,
-  //   "targetAccount": 1,
-  //   "amount": 1230,
-  //   "description": "Thanks for the laughs!",
-  //   "initiatedAt": "2019-05-30T12:53:38-04:00",
-  //   "completedAt": null,
-  //   "failedAt": null
-  // }
 
 module.exports = {
   req: req,
@@ -132,4 +128,5 @@ module.exports = {
   buildSocialTransfers: buildSocialTransfers,
   filterCorruptData: filterCorruptData,
   postTransfer: postTransfer,
+  updateAccount: updateAccount,
 }

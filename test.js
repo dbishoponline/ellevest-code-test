@@ -117,7 +117,7 @@ test('postTransfer() will return a new transfer object', async t => {
     initiatedAt: "2019-05-30T12:53:38-04:00" // For an extra challenge, set this value to the current time
   }
 
-  const accounts = await h.getAccountById().run().promise()
+  const accounts = await h.getAccounts().run().promise()
 
   const result = await h.postTransfer(transferData, accounts.data)
 
@@ -132,4 +132,19 @@ test('postTransfer() will return a new transfer object', async t => {
     "completedAt": null,
     "failedAt": null
   })
+})
+
+test('updateAccount() will send a PUT request and and update an account', t => {
+  const id = 2
+  const amount = 20
+  const account = h.getAccountById(id)
+
+  h.updateAccount({
+    id: id,
+    amount: amount,
+  })
+
+  const accountUpdated = h.getAccountById(id)
+
+  t.is(account.balance, (accountUpdated.balance) - amount)
 })
