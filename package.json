@@ -1,0 +1,27 @@
+{
+  "name": "ellevest-code-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dbishoponline/ellevest-code-test.git"
+  },
+  "author": "Dylan Bishop",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dbishoponline/ellevest-code-test/issues"
+  },
+  "homepage": "https://github.com/dbishoponline/ellevest-code-test#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "folktale": "^2.3.2",
+    "ramda": "^0.27.0"
+  },
+  "devDependencies": {
+    "ava": "^3.2.0"
+  }
+}

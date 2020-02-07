@@ -1,0 +1,6 @@
+
+{
+  "failed_endpoint_access":"FAILED to access endpoints",
+  "missing_id_arg":"function requires an `id`",
+  "insufficient_funds":"Your account has insufficent funds"
+}

@@ -1,0 +1,7 @@
+{
+  "host": "https://dylan-takehome.glitch.me",
+  "accounts": "/accounts",
+  "likes": "/likes",
+  "transfers": "/transfers",
+  "users": "/users"
+}
