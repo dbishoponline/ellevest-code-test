@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/dbishoponline/ellevest-code-test#readme",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "folktale": "^2.3.2",
     "ramda": "^0.27.0"
   },
